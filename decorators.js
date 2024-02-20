@@ -1,63 +1,38 @@
 let worker = {
+    someMethod() {
+        return 2;
+    },
     slow(min, max) {
-        console.log(`Called with ${min} ${max}`)
-        console.log(this)
-        return min + max;
+        console.log(`Called with ${min},${max} `)
+        return min + max + this.someMethod();
     }
 }
+
 
 function cachingDecorator(func, hash) {
     let cache = new Map();
 
-    return function() {
-
+    return function () {
         let key = hash(arguments);
-        if(cache.has(key)) {
+        if (cache.has(key)) {
+            console.log("got from cache")
             return cache.get(key);
         }
 
-        let result = func.call(this, ...arguments);
-        cache.set(key,result)
+       // let result = func.call(this, ...arguments);
+        // или
+        let result = func.apply(this, arguments)
+
+        cache.set(key, result);
         return result;
     }
 }
 
-function hash(args) {
-    return args[0] + ',' + args[1];
+function hash() {
+    return [].join.call(arguments);
 }
 
-worker.slow = cachingDecorator(worker.slow, hash)
+worker.slow = cachingDecorator(worker.slow, hash);
 
-console.log(worker.slow(1,3))
-console.log(worker.slow(1,3))
-
-// let worker = {
-//     slow(min, max) {
-//         alert(`Called with ${min},${max}`);
-//         return min + max;
-//     }
-// };
-//
-// function cachingDecorator(func, hash) {
-//     let cache = new Map();
-//     return function() {
-//         let key = hash(arguments); // (*)
-//         if (cache.has(key)) {
-//             return cache.get(key);
-//         }
-//
-//         let result = func.call(this, ...arguments); // (**)
-//
-//         cache.set(key, result);
-//         return result;
-//     };
-// }
-//
-// function hash(args) {
-//     return args[0] + ',' + args[1];
-// }
-//
-// worker.slow = cachingDecorator(worker.slow, hash);
-//
-// alert( worker.slow(3, 5) ); // работает
-// alert( "Again " + worker.slow(3, 5) ); // аналогично (из кеша)
+console.log(worker.slow(1,2));
+console.log(worker.slow(1,2));
