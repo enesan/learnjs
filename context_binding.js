@@ -1,8 +1,10 @@
-let user = {
-    firstName: "Вася",
-    sayHi() {
-        console.log(`Привет, ${this.firstName}!`);
-    }
-};
+// function f() {
+//     console.log(this.name);
+// }
+//
+// f = f.bind({name: "vasya"}).bind({name: "petya"});
+//
+// f();
 
-setTimeout(user.sayHi, 1000);
+// task 4
+
