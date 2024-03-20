@@ -91,16 +91,20 @@ function helloName(name) {
 //     }
 // }
 //
-// helloName = debounce(helloName, 1000);
-// helloName(1);
-// setTimeout(() => helloName(2), 200)
-// setTimeout(() => helloName(3), 500)
+
+
+
+
+helloName = debounce(helloName, 1000);
+helloName(1);
+setTimeout(() => helloName(2), 200)
+setTimeout(() => helloName(3), 500)
 
 
 // task 4
 
-function throttle(func) {
+// function throttle(func) {
 
-}
+// }
 
-helloName = throttle(helloName);
+// helloName = throttle(helloName);
